@@ -1,41 +1,51 @@
- //as file is saved server restarted
-//  require ("dotenv").config({path:"./env"})//it is responsible for loading environment variables from a .env file into process.env;
-import dotenv from "dotenv";
-import connectToDatabase from "./db/index.js"; 
+//console.log("🚀 INDEX.JS LOADED");
+// require('dotenv').config({path: './env'})
+import dotenv from "dotenv"
+import connectDB from "./db/index.js";
+import app from './app.js'
 dotenv.config({
-    path: "./env"
-});
+    // path: './.env'
+})
+
+
+connectDB()
+.then(() => {
+    app.listen(process.env.PORT || 8000, () => {
+        console.log(`⚙️ Server is running at port : ${process.env.PORT}`);
+    })
+})
+.catch((err) => {
+    console.log("MONGO db connection failed !!! ", err);
+})
 
 
 
 
-// dotenv.config();
-
-// import express from "express";
-// const app = express();
 
 
 
- ////database connection method 1
-
-//  ;(async () => {
-//    try {
-//      const connectionInstance = await mongoose.connect(`${process.env.MONGO_URI}/${DB_NAME}`);
-//      console.log("MongoDB connected successfully");
-//      //listener
-//      app.on("error", (err) => {
-//        console.error("Error connecting to MongoDB:", err);
-//        throw err;
-//      });
-//      app.listen(process.env.PORT, () => {
-//        console.log(`Server is running on port ${process.env.PORT}`);
-//      });
-//    } catch (error) {
-//      console.error("Error connecting to MongoDB:", error);
-//      throw error;
-//    }
-//  })();
 
 
-connectToDatabase()
 
+/*
+import express from "express"
+const app = express()
+( async () => {
+    try {
+        await mongoose.connect(`${process.env.MONGODB_URI}/${DB_NAME}`)
+        app.on("errror", (error) => {
+            console.log("ERRR: ", error);
+            throw error
+        })
+
+        app.listen(process.env.PORT, () => {
+            console.log(`App is listening on port ${process.env.PORT}`);
+        })
+
+    } catch (error) {
+        console.error("ERROR: ", error)
+        throw err
+    }
+})()
+
+*/
